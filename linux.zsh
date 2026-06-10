@@ -11,6 +11,10 @@
 # pnpm default install location on Linux (when installed via the standalone
 # installer or `npm i -g pnpm`). Adjust if you use a distro package.
 export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
 
 # No Linux-only oh-my-zsh plugins by default. Leave the array empty so the
 # common file's `plugins+=("${ZSH_OS_PLUGINS[@]}")` is a no-op rather than
