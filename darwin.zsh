@@ -32,3 +32,6 @@ ZSH_OS_PLUGINS=(macos)
 
 # pnpm default install location on macOS.
 export PNPM_HOME="$HOME/Library/pnpm"
+
+# Tailscale command
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
