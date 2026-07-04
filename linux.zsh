@@ -16,7 +16,23 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 
+# Put cargo on the system PATH
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # No Linux-only oh-my-zsh plugins by default. Leave the array empty so the
 # common file's `plugins+=("${ZSH_OS_PLUGINS[@]}")` is a no-op rather than
 # referencing an unset variable.
 ZSH_OS_PLUGINS=()
+
+# Enable GPG over SSH
+export GPG_TTY=$(tty)
+if [ -n "${SSH_CONNECTION:-}" ]; then
+  gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1 || true
+fi
+
+# RDP credentials properly set on ssh login?
+if [[ -n "${SSH_CONNECTION:-}" ]] && command -v refresh-rdp-credentials.sh &>/dev/null; then
+  refresh-rdp-credentials.sh --check-only || {
+  echo "RDP credentials may need refresh: refresh-rdp-credentials.sh --force"
+}
+fi

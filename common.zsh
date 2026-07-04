@@ -91,3 +91,10 @@ prepend_path "$PNPM_HOME"
 if command -v go >/dev/null 2>&1; then
   prepend_path "$(go env GOPATH)/bin"
 fi
+
+# UV config
+export UV_PYTHON_DOWNLOADS=automatic
+
+# Pi agent helpers
+alias pi-start='read $HOME/.pi-system-profile.md && echo "System profile loaded. Using custom context."'
+alias websearch='bash $HOME/tools/web_search.sh'
