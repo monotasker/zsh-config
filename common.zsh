@@ -5,8 +5,8 @@
 prepend_path() {
   [[ -z "$1" ]] && return
   case ":$PATH:" in
-    *":$1:"*) ;;
-    *) export PATH="$1:$PATH" ;;
+  *":$1:"*) ;;
+  *) export PATH="$1:$PATH" ;;
   esac
 }
 
@@ -62,6 +62,9 @@ alias get_kc_ip='uv run --project "$HOME/Development/knowledge-commons-tools" "$
 alias get_kc_ips='uv run --project "$HOME/Development/knowledge-commons-tools" "$HOME/Development/knowledge-commons-tools/get_all_ips.py"'
 alias ssh_prod='ssh -i "$HOME/.ssh/msu-dev-2022.pem" ec2-user@$(get_kc_ip kcworks-prod-2 2>/dev/null | grep -oE "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}")'
 alias ssh_staging='ssh -i "$HOME/.ssh/msu-dev-2022.pem" ec2-user@$(get_kc_ip kcworks-staging-3 2>/dev/null | grep -oE "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}")'
+
+# dotsync
+alias dotsync='bash ~/.local/bin/dotsync/dotsync.sh'
 
 # NVM (Node version manager)
 export NVM_DIR="$HOME/.nvm"
