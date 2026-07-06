@@ -12,8 +12,8 @@
 # installer or `npm i -g pnpm`). Adjust if you use a distro package.
 export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME/bin:"*) ;;
-  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+*":$PNPM_HOME/bin:"*) ;;
+*) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 
 # Put cargo on the system PATH
@@ -33,6 +33,12 @@ fi
 # RDP credentials properly set on ssh login?
 if [[ -n "${SSH_CONNECTION:-}" ]] && command -v refresh-rdp-credentials.sh &>/dev/null; then
   refresh-rdp-credentials.sh --check-only || {
-  echo "RDP credentials may need refresh: refresh-rdp-credentials.sh --force"
-}
+    echo "RDP credentials may need refresh: refresh-rdp-credentials.sh --force"
+  }
+fi
+
+if [[ -n "${SSH_CONNECTION:-}" ]]; then
+  unset SSH_AUTH_SOCK SSH_AGENT_PID
+  eval "$(ssh-agent -s)" >/dev/null
+  trap '[[ -n "$SSH_AGENT_PID" ]] && ssh-agent -k >/dev/null 2>&1' EXIT
 fi
