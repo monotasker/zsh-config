@@ -40,10 +40,20 @@ fi
 # To ensure ssh-agent is active to unlock ssh keys for session
 if [[ -n "${SSH_CONNECTION:-}" ]]; then
   unset SSH_AUTH_SOCK SSH_AGENT_PID
+fi
+
+if ! pgrep -u "$USER" ssh-agent >/dev/null; then
   eval "$(ssh-agent -s)" >/dev/null
+fi
+
+if [ -z "${SSH_AUTH_SOCK:-}" ]; then
+  export SSH_AUTH_SOCK=$(find "$HOME/.ssh/agent" -name "s.*" | head -1)
+  export SSH_AGENT_PID=$(pgrep -u "$USER" ssh-agent)
+fi
+
+if [[ -n "${SSH_CONNECTION:-}" ]]; then
   # ensure TERM is set so that ssh-agent recognizes an SSH session
   [[ "$TERM" == tmux* ]] && export TERM=xterm-256color
-
   # lock ssh keys again on exit
   trap '[[ -n "$SSH_AGENT_PID" ]] && ssh-agent -k >/dev/null 2>&1' EXIT
 fi
