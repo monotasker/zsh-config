@@ -38,13 +38,17 @@ alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
 # RDP to linux
 frd() {
-  local host="fedora.tailc44e07.ts.net" 
-  local user="monotasker" 
+  local host="fedora.tailc44e07.ts.net"
+  local user="monotasker"
   local pw
   pw=$(security find-generic-password -a "$user" -s "fedora-rdp" -w) || {
-    echo "Could not read password from Keychain"; return 1
+    echo "Could not read password from Keychain"
+    return 1
   }
   printf '/v:%s\n/u:%s\n/p:%s\n/d:\n/cert:ignore\n/dynamic-resolution\n+clipboard\n/gfx:AVC444\n' \
     "$host" "$user" "$pw" | sdl-freerdp /args-from:stdin
   unset pw
 }
+
+# Yubikey
+export YKCS11="$(brew --prefix yubico-piv-tool)/lib/libykcs11.dylib"

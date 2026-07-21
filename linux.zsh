@@ -57,3 +57,6 @@ if [[ -n "${SSH_CONNECTION:-}" ]]; then
   # lock ssh keys again on exit
   trap '[[ -n "$SSH_AGENT_PID" ]] && ssh-agent -k >/dev/null 2>&1' EXIT
 fi
+
+# Yubikey ssh piv handler
+export YKCS11="/usr/lib64/libykcs11.dylib"
