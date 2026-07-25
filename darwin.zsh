@@ -51,4 +51,4 @@ frd() {
 }
 
 # Yubikey
-export YKCS11="$(brew --prefix yubico-piv-tool)/lib/libykcs11.dylib"
+export YKCS11="/usr/lib/ssh-keychain.dylib"

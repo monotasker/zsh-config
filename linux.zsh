@@ -59,4 +59,4 @@ if [[ -n "${SSH_CONNECTION:-}" ]]; then
 fi
 
 # Yubikey ssh piv handler
-export YKCS11="/usr/lib64/libykcs11.dylib"
+export YKCS11="/usr/lib64/opensc-pkcs11.so"
