@@ -101,3 +101,7 @@ export UV_PYTHON_DOWNLOADS=automatic
 # Pi agent helpers
 alias pi-start='read $HOME/.pi-system-profile.md && echo "System profile loaded. Using custom context."'
 alias websearch='bash $HOME/tools/web_search.sh'
+
+# secondary SSH settings to support sandboxed dev project
+export KCWORKS_SSH_KEY=~/.ssh/id_ed25519_sk
+export KCWORKS_SSH_KEY_HOSTS=github.com

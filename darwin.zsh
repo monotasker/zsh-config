@@ -52,3 +52,13 @@ frd() {
 
 # Yubikey
 export YKCS11="/usr/lib/ssh-keychain.dylib"
+
+# GPG agent socket for KCWorks Docker agent overlays (docker-compose*.agents.yml).
+# Host gpg does not need this; Compose bind-mounts it into workspace/editor.
+# If Docker Desktop cannot use the raw socket, point this at your bridge path.
+# Leave SSH_AUTH_SOCK alone — macOS/launchd usually provides it.
+if command -v gpgconf >/dev/null 2>&1; then
+  _gpg_agent_sock="$(gpgconf --list-dirs agent-socket 2>/dev/null || true)"
+  [[ -n "$_gpg_agent_sock" ]] && export GPG_AGENT_SOCK="$_gpg_agent_sock"
+  unset _gpg_agent_sock
+fi
